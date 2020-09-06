@@ -2,7 +2,6 @@ package ru.stqa.addressbook.test;
 
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
-import ru.stqa.addressbook.test.TestBase;
 
 public class ContactCreationTest extends TestBase {
 
@@ -10,7 +9,7 @@ public class ContactCreationTest extends TestBase {
   @Test
   public void testContactCreation() {
 
-    app.gotoContactPage();
+    app.getNavigationHelper().gotoContactPage();
     app.initContactCreation();
     app.fillContactGroup(new ContactData("Evgeniy", "Telepnev", "Mogaisk", "+7 926 123 45 67", "8 901 233 44 55", "mail@net.ru"));
     app.submitContactCreation();
