@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -15,8 +16,10 @@ public class TestBase {
 
   @BeforeMethod
   public void setUp() {
-    wd = new FirefoxDriver();
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd = new ChromeDriver();
+//    wd = new FirefoxDriver();
+    wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+    wd.manage().window().fullscreen();
     wd.get("http://localhost/addressbook/group.php");
     login("admin", "secret");
   }
@@ -51,7 +54,7 @@ public class TestBase {
     wd.findElement(By.linkText("add new")).click();
   }
 
-  protected void gotoHomePage() {
+  protected void gotoContactPage() {
     wd.findElement(By.linkText("home")).click();
   }
 
@@ -92,6 +95,14 @@ public class TestBase {
     wd.findElement(By.linkText("groups")).click();
   }
 
+  protected void deletSelectedGroups() {
+    wd.findElement(By.name("delete")).click();
+  }
+
+  protected void selectGroup() {
+    wd.findElement(By.name("selected[]")).click();
+  }
+
   @AfterMethod
   public void tearDown() {
     wd.quit();
@@ -113,11 +124,15 @@ public class TestBase {
     }
   }
 
-  protected void deletSelectedGroups() {
-    wd.findElement(By.name("delete")).click();
+  protected void closeAlert() {
+    wd.switchTo().alert().accept();
   }
 
-  protected void selectGroup() {
+  protected void deletSeletedContact() {
+    wd.findElement(By.xpath("//input[@value='Delete']")).click();
+  }
+
+  protected void selectContact() {
     wd.findElement(By.name("selected[]")).click();
   }
 }
