@@ -1,31 +1,27 @@
-package ru.stqa.addressbook;
+package ru.stqa.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.GroupData;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestBase {
+public class ApplicationManager {
   public WebDriver wd;
 
-  @BeforeMethod
-  public void setUp() {
+  public void init() {
     wd = new ChromeDriver();
-//    wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     wd.manage().window().fullscreen();
     wd.get("http://localhost/addressbook/group.php");
     login("admin", "secret");
   }
 
-
-  protected void fillContactGroup(ContactData contactData) {
+  public void fillContactGroup(ContactData contactData) {
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).clear();
     wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
@@ -46,19 +42,19 @@ public class TestBase {
     wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
   }
 
-  protected void submitContactCreation() {
+  public void submitContactCreation() {
     wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
   }
 
-  protected void initContactCreation() {
+  public void initContactCreation() {
     wd.findElement(By.linkText("add new")).click();
   }
 
-  protected void gotoContactPage() {
+  public void gotoContactPage() {
     wd.findElement(By.linkText("home")).click();
   }
 
-  private void login(String username, String password) {
+  public void login(String username, String password) {
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).clear();
     wd.findElement(By.name("user")).sendKeys(username);
@@ -67,15 +63,15 @@ public class TestBase {
     wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
 
-  protected void returnGroupPage() {
+  public void returnGroupPage() {
     wd.findElement(By.linkText("group page")).click();
   }
 
-  protected void submitGroupCreation() {
+  public void submitGroupCreation() {
     wd.findElement(By.name("submit")).click();
   }
 
-  protected void fillGroupForm(GroupData groupData) {
+  public void fillGroupForm(GroupData groupData) {
     wd.findElement(By.name("group_name")).click();
     wd.findElement(By.name("group_name")).clear();
     wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
@@ -87,27 +83,27 @@ public class TestBase {
     wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
   }
 
-  protected void initGroupCreation() {
+  public void initGroupCreation() {
     wd.findElement(By.name("new")).click();
   }
 
-  protected void gotoGroupPage() {
+  public void gotoGroupPage() {
     wd.findElement(By.linkText("groups")).click();
   }
 
-  protected void deletSelectedGroups() {
+  public void deletSelectedGroups() {
     wd.findElement(By.name("delete")).click();
   }
 
-  protected void selectGroup() {
+  public void selectGroup() {
     wd.findElement(By.name("selected[]")).click();
   }
 
-  @AfterMethod
-  public void tearDown() {
+  public void stop() {
     wd.quit();
   }
-  private boolean isElementPresent(By by) {
+
+  public boolean isElementPresent(By by) {
     try {
       wd.findElement(by);
       return true;
@@ -115,7 +111,8 @@ public class TestBase {
       return false;
     }
   }
-  private boolean isAlertPresent() {
+
+  public boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
       return true;
@@ -124,15 +121,15 @@ public class TestBase {
     }
   }
 
-  protected void closeAlert() {
+  public void closeAlert() {
     wd.switchTo().alert().accept();
   }
 
-  protected void deletSeletedContact() {
+  public void deletSeletedContact() {
     wd.findElement(By.xpath("//input[@value='Delete']")).click();
   }
 
-  protected void selectContact() {
+  public void selectContact() {
     wd.findElement(By.name("selected[]")).click();
   }
 }
