@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.test;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
