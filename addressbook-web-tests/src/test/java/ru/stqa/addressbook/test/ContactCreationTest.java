@@ -15,7 +15,7 @@ public class ContactCreationTest extends TestBase {
             "Telepnev", "Mogaisk", "+7 926 123 45 67",
             "8 901 233 44 55", "mail@net.ru","TestReTest"),true);
     app.getContactHelper().submitContactCreation();
-    app.getNavigationHelper().gotoContactPage();
+    app.getNavigationHelper().gotoHomePage();
 
 
   }
