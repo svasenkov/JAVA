@@ -13,6 +13,10 @@ public class GroupModificationTest extends TestBase{
   public void testUntitledTestCase() {
 
     app.getNavigationHelper().gotoGroupPage();
+
+    if( ! app.getGroupHelper().isThereAGruop()) {
+      app.getGroupHelper().creatGroup(new GroupData("TestReTest", null, null));
+    }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initModificationTest();
     app.getGroupHelper().fillGroupForm(new GroupData( "New Test", "Test New","New"));
