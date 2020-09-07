@@ -22,7 +22,6 @@ public class ApplicationManager {
   public ApplicationManager(String browser) {
     this.browser = browser;
   }
-
   public void init() {
     if (browser.equals(BrowserType.FIREFOX)) {
       wd = new FirefoxDriver();
@@ -44,7 +43,6 @@ public class ApplicationManager {
   public void stop() {
     wd.quit();
   }
-
   public boolean isElementPresent(By by) {
     try {
       wd.findElement(by);
@@ -53,19 +51,15 @@ public class ApplicationManager {
       return false;
     }
   }
-
   public void closeAlert() {
     wd.switchTo().alert().accept();
   }
-
   public GroupHelper getGroupHelper() {
     return groupHelper;
   }
-
   public NavigationHelper getNavigationHelper() {
     return navigationHelper;
   }
-
   public ContactHelper getContactHelper() {
     return contactHelper;
   }

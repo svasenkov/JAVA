@@ -13,7 +13,8 @@ public class ContactModificationTest extends TestBase {
     app.getContactHelper().selectContact();
     app.getContactHelper().initModificationContact();
     app.getContactHelper().fillContactGroup(new ContactData("NewUpDate", "NewUpDate",
-            "NewUpDate", "NewUpDate", "NewUpDate", "NewUpDate"));
+            "NewUpDate", "NewUpDate", "NewUpDate",
+            "NewUpDate", null), false);
     app.getContactHelper().submitModificationContact();
     app.getNavigationHelper().gotoContactPage();
 
