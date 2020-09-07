@@ -2,7 +2,6 @@ package ru.stqa.addressbook.test;
 
 
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
 import ru.stqa.addressbook.model.GroupData;
 
 
