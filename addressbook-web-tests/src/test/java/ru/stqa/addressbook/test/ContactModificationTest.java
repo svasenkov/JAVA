@@ -12,9 +12,10 @@ public class ContactModificationTest extends TestBase {
     app.getNavigationHelper().gotoContactPage();
     app.getContactHelper().selectContact();
     app.getContactHelper().initModificationContact();
-    app.getContactHelper().fillContactGroup(new ContactData("NewUpDate", "NewUpDate",
-            "NewUpDate", "NewUpDate", "NewUpDate",
-            "NewUpDate", null), false);
+    app.getContactHelper().fillContactGroup(new ContactData("NewUpDate",
+            "NewUpDate",
+            "00000000",
+            "010101010","Mogaisk", null), false);
     app.getContactHelper().submitModificationContact();
     app.getNavigationHelper().gotoContactPage();
 
