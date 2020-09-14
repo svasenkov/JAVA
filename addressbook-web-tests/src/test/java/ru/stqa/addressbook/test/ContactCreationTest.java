@@ -11,7 +11,7 @@ public class ContactCreationTest extends TestBase {
 
     app.getNavigationHelper().gotoHomePage();
     app.getContactHelper().createContact(new ContactData("Evgen", "Test",
-            "+7123456", "mail@mail.ru", "TEST", "TestTest"), true);
+            "+7123456", "mail@mail.ru", "TEST"));
 
   }
 
