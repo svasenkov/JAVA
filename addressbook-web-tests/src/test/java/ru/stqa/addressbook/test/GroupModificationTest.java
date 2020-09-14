@@ -9,7 +9,7 @@ public class GroupModificationTest extends TestBase{
 
 
   @Test
-  public void testGroupDeletion() {
+  public void testGroupModifications() {
 
     app.getNavigationHelper().gotoGroupPage();
     if ( ! app.getGroupHelper().isThereAgroup()) {

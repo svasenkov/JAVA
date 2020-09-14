@@ -18,6 +18,7 @@ public class ContactData {
     this.email = email;
     this.address = address;
     this.group = group;
+
   }
 
   public String getAddress() {
