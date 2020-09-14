@@ -5,6 +5,9 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.addressbook.model.GroupData;
 
+import java.util.HashSet;
+import java.util.List;
+
 
 public class GroupModificationTest extends TestBase{
 
@@ -13,20 +16,24 @@ public class GroupModificationTest extends TestBase{
   public void testGroupModifications() {
 
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
-
     if ( ! app.getGroupHelper().isThereAgroup()) {
-      app.getGroupHelper().creatGroup(new GroupData("TestTes", null, null));
+      app.getGroupHelper().creatGroup(new GroupData("Test1", null, null));
     }
 
+    List<GroupData> before = app.getGroupHelper().getGroupList();
 
-    app.getGroupHelper().selectGroup();
+    app.getGroupHelper().selectGroup(before.size() -1);
     app.getGroupHelper().initModificationTest();
-    app.getGroupHelper().fillGroupForm(new GroupData( "New Test", "Test New","New"));
+    GroupData group = new GroupData(before.get(before.size() -1).getId(),
+            "New Test", null,null);
+    app.getGroupHelper().fillGroupForm(group);
     app.getGroupHelper().submitModificationTest();
     app.getGroupHelper().returnGroupPage();
-    int after = app.getGroupHelper().getGroupCount();
-    Assert.assertEquals(after, before);
+    List<GroupData> after = app.getGroupHelper().getGroupList();
 
+    Assert.assertEquals(after.size(), before.size());
+    before.remove(before.size() -1);
+    before.add(group);
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 }
