@@ -5,20 +5,21 @@ import org.testng.annotations.*;
 import org.openqa.selenium.*;
 import ru.stqa.addressbook.model.ContactData;
 
+import java.util.List;
+
 public class ContactModificationTest extends TestBase {
 
 
   @Test
   public void testContactModification() {
     app.getNavigationHelper().gotoHomePage();
-    int before = app.getContactHelper().getContactCount();
 
     if(! app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Evgen", "Test",
               "+7123456", "mail@mail.ru", "TEST"));
     }
-
-    app.getContactHelper().selectContact(before - 1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().initModificationContact();
     app.getContactHelper().fillContactGroup(new ContactData("NewUpDate",
             "NewUpDate",
@@ -27,8 +28,8 @@ public class ContactModificationTest extends TestBase {
 
     app.getContactHelper().submitModificationContact();
     app.getNavigationHelper().gotoContactPage();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size());
   }
 
 
