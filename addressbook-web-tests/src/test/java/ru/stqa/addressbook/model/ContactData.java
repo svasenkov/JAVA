@@ -10,7 +10,15 @@ public class ContactData {
   private final String email;
   private String address;
 
-
+  public ContactData(String firstname, String lastname,
+                     String mobile, String email, String address) {
+    this.id = Integer.MAX_VALUE;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.mobile = mobile;
+    this.email = email;
+    this.address = address;
+  }
   public ContactData(int id,String firstname, String lastname,
                      String mobile, String email, String address) {
     this.id = id;
@@ -20,15 +28,7 @@ public class ContactData {
     this.email = email;
     this.address = address;
   }
-  public ContactData(String firstname, String lastname,
-                     String mobile, String email, String address) {
-    this.id = 0;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.mobile = mobile;
-    this.email = email;
-    this.address = address;
-  }
+
 
   public int getId() {
     return id;
@@ -67,15 +67,12 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id &&
-            Objects.equals(firstname, that.firstname) &&
+    return Objects.equals(firstname, that.firstname) &&
             Objects.equals(lastname, that.lastname);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, lastname);
+    return Objects.hash(firstname, lastname);
   }
-
-
 }
