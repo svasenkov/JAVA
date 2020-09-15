@@ -5,7 +5,9 @@ import org.testng.annotations.*;
 import org.openqa.selenium.*;
 import ru.stqa.addressbook.model.ContactData;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class ContactModificationTest extends TestBase {
 
@@ -21,16 +23,21 @@ public class ContactModificationTest extends TestBase {
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().initModificationContact();
-    app.getContactHelper().fillContactGroup(new ContactData("NewUpDate",
+    ContactData contactData = new ContactData("NewUpDate",
             "NewUpDate",
             "00000000",
-            "010101010","Mogaisk"));
+            "010101010","Mogaisk");
+    app.getContactHelper().fillContactGroup(contactData);
 
     app.getContactHelper().submitModificationContact();
     app.getNavigationHelper().gotoContactPage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
-  }
 
+
+    before.remove(before.size() - 1);
+    before.add(contactData);
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+  }
 
 }
