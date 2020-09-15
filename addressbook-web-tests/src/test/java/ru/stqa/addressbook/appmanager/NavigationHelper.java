@@ -9,9 +9,9 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-//  public void gotoContactPage() {
-//    click(By.linkText("home"));
-//  }
+  public void gotoContactPage() {
+    click(By.xpath("//*[@id=\"nav\"]/ul/li[1]/a"));
+  }
   public void gotoGroupPage() {
     if (isElementPresent(By.tagName("h1"))
             && wd.findElement(By.tagName("h1")).getText().equals("Groups")

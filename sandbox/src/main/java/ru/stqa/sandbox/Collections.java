@@ -15,6 +15,7 @@ public class Collections {
 
     String [] langs = {"Java", "C#", "PHP", "Python"};
 
+
     for (String str : langs) {
       System.out.println(" I want to learn " + str);
     }
