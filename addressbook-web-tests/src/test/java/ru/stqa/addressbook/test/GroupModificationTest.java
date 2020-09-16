@@ -22,7 +22,7 @@ public class GroupModificationTest extends TestBase {
     }
   }
 
-  @Test
+  @Test (enabled = false)
   public void testGroupModifications() {
 
     Groups before = app.group().all();
