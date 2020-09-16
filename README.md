@@ -6,6 +6,7 @@
 - Selenium WedDriver
 - Gradle
 - TestNG
+- Hamcrest
 
  
  
