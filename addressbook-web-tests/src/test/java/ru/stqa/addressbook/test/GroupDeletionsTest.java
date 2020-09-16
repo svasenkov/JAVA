@@ -1,32 +1,37 @@
 package ru.stqa.addressbook.test;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.util.List;
 
 public class GroupDeletionsTest extends TestBase {
 
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().groupPage();
+    if (app.group().list().size() == 0) {
+      app.group().create(new GroupData("Test1", null, null));
+    }
+  }
+
   @Test
   public void testGroupDeletions() {
-    app.getNavigationHelper().gotoGroupPage();
-    if ( ! app.getGroupHelper().isThereAgroup()) {
-      app.getGroupHelper().creatGroup(new GroupData("TestTes", null, null));
-    }
-    List<GroupData> before = app.getGroupHelper().getGroupList();
 
-    app.getGroupHelper().selectGroup(before.size() -1);
-    app.getGroupHelper().deletSelectedGroups();
-    app.getGroupHelper().returnGroupPage();
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> before = app.group().list();
+    int index = before.size() - 1;
+    app.group().delet(index);
+    List<GroupData> after = app.group().list();
 
-    Assert.assertEquals(after.size(), before.size() -1);
+    Assert.assertEquals(after.size(), before.size() - 1);
 
-    before.remove(before.size() -1);
+    before.remove(index);
     Assert.assertEquals(before, after);
 
 
   }
+
 
 }

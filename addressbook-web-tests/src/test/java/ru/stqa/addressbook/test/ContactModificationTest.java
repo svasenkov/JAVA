@@ -2,20 +2,17 @@ package ru.stqa.addressbook.test;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
 import ru.stqa.addressbook.model.ContactData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 public class ContactModificationTest extends TestBase {
 
 
   @Test (enabled = false)
   public void testContactModification() {
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().homePage();
 
     if(! app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Evgen", "Test",
@@ -31,7 +28,7 @@ public class ContactModificationTest extends TestBase {
     app.getContactHelper().fillContactGroup(contactData);
 
     app.getContactHelper().submitModificationContact();
-    app.getNavigationHelper().gotoContactPage();
+    app.goTo().contactPage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
 
