@@ -13,7 +13,6 @@ public class ContactHelper extends HelperBase {
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
-
   public void fillContactGroup(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstname());
     type(By.name("lastname"), contactData.getLastname());
@@ -21,8 +20,6 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
 
   }
-
-
   public void submitContactCreation() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
@@ -33,14 +30,19 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//input[@value='Delete']"));
   }
   public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+    wd.findElements(By.xpath("//*[@name=\"selected[]\"]")).get(index).click();
   }
   public void submitModificationContact() {
     click(By.xpath("(//input[@name='update'])[2]"));
   }
-  public void initModificationContact() {
-    click(By.xpath("//img[@alt='Edit']"));
+
+//  Что не так тут ???
+  public void initModificationContact(int index) {
+    wd.findElements(By.xpath("//*[@title=\"Edit\"]/..")).get(index).click();
   }
+
+
+
   public void returnContactPage() {
     click(By.linkText("home"));
   }
@@ -51,23 +53,18 @@ public class ContactHelper extends HelperBase {
     returnContactPage();
 
   }
-
-
-
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
   }
-
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
-
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name=\"entry\"]"));
+    List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name=\"entry\"]"));
     for (WebElement element : elements) {
-      String lastname = element.findElement(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[2]")).getText();
-      String firstname = element.findElement(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[3]")).getText();
+      String lastname = element.findElement(By.xpath("//td[2]")).getText();
+      String firstname = element.findElement(By.xpath("//td[3]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       ContactData contact = new ContactData(id,firstname, lastname, null, null, null);
       contacts.add(contact);
