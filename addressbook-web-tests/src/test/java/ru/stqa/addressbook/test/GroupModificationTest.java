@@ -22,7 +22,7 @@ public class GroupModificationTest extends TestBase {
     }
   }
 
-  @Test (enabled = false)
+  @Test
   public void testGroupModifications() {
 
     Groups before = app.group().all();
@@ -30,8 +30,8 @@ public class GroupModificationTest extends TestBase {
     GroupData group = new GroupData().withId(modifedGroup.getId()).
             withName("Test").withHeader("TestToHeader").withFooter("TestToFooter");
     app.group().modify(group);
+    assertThat(app.group().count(), equalTo(before.size()));
     Groups after = app.group().all();
-    Assert.assertEquals(after.size(), before.size());
     assertThat(after, equalTo(before.without(modifedGroup).withAdded(group)));
   }
 
