@@ -43,11 +43,9 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='update'])[2]"));
   }
 
-  //  Что не так тут ???
   public void initModificationContact(int index) {
     wd.findElements(By.xpath("//*[@title=\"Edit\"]/..")).get(index).click();
   }
-
 
   public void returnContactPage() {
     click(By.linkText("home"));
