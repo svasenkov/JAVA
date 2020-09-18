@@ -3,8 +3,8 @@ package ru.stqa.addressbook.test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.GroupData;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTest extends TestBase {
@@ -14,16 +14,14 @@ public class ContactCreationTest extends TestBase {
   public void testContactCreation() {
 
     app.goTo().homePage();
-    int before = app.getContactHelper().getContactCount();
-    ContactData contactData = new ContactData("Name!!!", "LastName!!!!",
-            "+7123456", "mail@mail.ru", "TEST");
+    List<ContactData> before = app.getContactHelper().getContactList();
+    ContactData contactData = new ContactData("Евген", "Жека", "+7 901 234 456",
+            "mail@net.com", "Geleznodorogniy");
     app.getContactHelper().createContact(contactData);
     app.goTo().contactPage();
-    int after = app.getContactHelper().getContactCount();
+    List<ContactData> after = app.getContactHelper().getContactList();
 
-    Assert.assertEquals(after, before + 1);
-
-
+    Assert.assertEquals(after.size(), before.size() + 1);
 
 
   }
