@@ -1,13 +1,20 @@
 package ru.stqa.addressbook.test;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.Contacts;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTest extends TestBase {
 
@@ -25,7 +32,7 @@ public class ContactModificationTest extends TestBase {
   @Test
   public void testContactModification() {
 
-    Set<ContactData> before = app.contact().all();
+    Contacts before = app.contact().all();
     ContactData modifyContact = before.iterator().next();
 
     ContactData contactData = new ContactData().withId(modifyContact.getId())
@@ -33,13 +40,10 @@ public class ContactModificationTest extends TestBase {
             .withEmail("mail@net.com").withAddress("Mogaisk");
 
     app.contact().modify(contactData);
-    Set<ContactData> after = app.contact().all();
-    Assert.assertEquals(after.size(), before.size());
+    Contacts after = app.contact().all();
+    assertEquals(after.size(), before.size());
 
-// делаем замену удаленного на измененный
-    before.remove(modifyContact);
-    before.add(contactData);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.withOut(modifyContact).withAdded(contactData)));
   }
 
 
