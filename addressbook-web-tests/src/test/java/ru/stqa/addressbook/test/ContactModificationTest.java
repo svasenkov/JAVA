@@ -16,8 +16,8 @@ public class ContactModificationTest extends TestBase {
 
     app.goTo().homePage();
     if( app.contact().list().size() == 0) {
-      app.contact().create(new ContactData("Евген", "Жека",
-              "+7123456", "mail@mail.ru", "Mogaisk"));
+      app.contact().create(new ContactData().withFirstname("Евген").withLastname("Жека")
+              .withMobile("+7123456").withEmail("mail@mail.ru").withAddress("Mogaisk"));
     }
   }
 
@@ -26,10 +26,9 @@ public class ContactModificationTest extends TestBase {
 
     List<ContactData> before = app.contact().list();
     int index = before.size() -1;
-    ContactData contactData = new ContactData( before.get(index).getId(),"ЕвGeN",
-            "Жека",
-            "+7901234567",
-            "mail@net.com","Mogaisk");
+    ContactData contactData = new ContactData().withId(before.get(index).getId())
+            .withFirstname("ЕвGeN").withLastname("Жека").withMobile("+7901234567")
+            .withEmail("mail@net.com").withAddress("Mogaisk");
 
     app.contact().modify(index, contactData);
     List<ContactData> after = app.contact().list();
