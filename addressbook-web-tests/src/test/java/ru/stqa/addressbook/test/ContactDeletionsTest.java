@@ -15,26 +15,25 @@ public class ContactDeletionsTest extends TestBase {
   public void ensurePreconditions() {
 
     app.goTo().homePage();
-    if(! app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Евген", "Жека",
+    if(app.contact().list().size() == 0) {
+      app.contact().create(new ContactData("Евген", "Жека",
               "+7123456", "mail@mail.ru", "Mogaisk"));
     }
   }
 
   @Test
   public void testContactDeletions() {
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
     int index = before.size() -1;
-    app.getContactHelper().selectContact(index);
-    app.getContactHelper().deletSeletedContact();
-    app.closeAlert();
-    app.goTo().contactPage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().delet(index);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), index);
     before.remove(index);
     Assert.assertEquals(before, after);
 
 
   }
+
+
 
 }
