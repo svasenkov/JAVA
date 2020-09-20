@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.addressbook.model.GroupData;
 import ru.stqa.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -38,7 +36,7 @@ public class GroupHelper extends HelperBase {
     click(By.name("delete"));
   }
 
-  public void selectGroupById (int id) {
+  public void selectGroupById(int id) {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
@@ -83,7 +81,7 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  private Groups groupsCache =null;
+  private Groups groupsCache = null;
 
   public Groups all() {
 
@@ -91,7 +89,7 @@ public class GroupHelper extends HelperBase {
       return new Groups(groupsCache);
     }
 
-    groupsCache  = new Groups();
+    groupsCache = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();
