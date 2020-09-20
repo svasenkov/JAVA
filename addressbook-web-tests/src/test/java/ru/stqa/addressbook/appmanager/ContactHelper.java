@@ -112,24 +112,29 @@ public class ContactHelper extends HelperBase {
 
   public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name=\"entry\"]"));
-    for (WebElement element : elements) {
-      String lastname = element.findElement(By.xpath("//td[2]")).getText();
-      String firstname = element.findElement(By.xpath("//td[3]")).getText();
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+    List<WebElement> elements = wd.findElements(By.name("entry"));
+    for (WebElement row : elements) {
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      String lastname = cells.get(1).getText();
+      String firstname = cells.get(2).getText();
+      int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+     ContactData cont = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname);
+     contacts.add(cont);
     }
     return contacts;
   }
 
+
   public Set<ContactData> all() {
     Set<ContactData> contacts = new HashSet<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name=\"entry\"]"));
-    for (WebElement element : elements) {
-      String lastname = element.findElement(By.xpath("//td[2]")).getText();
-      String firstname = element.findElement(By.xpath("//td[3]")).getText();
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+    List<WebElement> elements = wd.findElements(By.name("entry"));
+    for (WebElement row : elements) {
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      String lastname = cells.get(1).getText();
+      String firstname = cells.get(2).getText();
+      int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+      ContactData cont = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname);
+      contacts.add(cont);
     }
     return contacts;
   }
