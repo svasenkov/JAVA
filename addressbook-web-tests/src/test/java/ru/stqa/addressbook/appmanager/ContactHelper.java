@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -31,11 +33,16 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void modify(int index, ContactData contactData) {
-    initModificationContact(index);
+  public void modify(ContactData contactData) {
+    initModificationContactById(contactData.getId());
     fillContactGroup(contactData);
     submitModificationContact();
     contactPage();
+  }
+
+  private void initModificationContactById(int id) {
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+    ;
   }
 
   private void contactPage() {
@@ -48,6 +55,10 @@ public class ContactHelper extends HelperBase {
 
   public void selectContact(int index) {
     wd.findElements(By.xpath("//*[@name=\"selected[]\"]")).get(index).click();
+  }
+
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void submitModificationContact() {
@@ -69,11 +80,21 @@ public class ContactHelper extends HelperBase {
     returnContactPage();
 
   }
+
   public void delet(int index) {
     selectContact(index);
     deletSeletedContact();
     closeAlert();
     contactPage();
+  }
+
+  public void delet(ContactData contact) {
+
+    selectContactById(contact.getId());
+    deletSeletedContact();
+    closeAlert();
+    contactPage();
+
   }
 
   private void closeAlert() {
@@ -100,4 +121,18 @@ public class ContactHelper extends HelperBase {
     }
     return contacts;
   }
+
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
+    List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name=\"entry\"]"));
+    for (WebElement element : elements) {
+      String lastname = element.findElement(By.xpath("//td[2]")).getText();
+      String firstname = element.findElement(By.xpath("//td[3]")).getText();
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+    }
+    return contacts;
+  }
+
+
 }
